@@ -36,14 +36,15 @@
         <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="btnRun" Content="运行" Width="80" Margin="0,0,10,0"
                     Click="btnRun_Click"/>
-            <CheckBox Content="调试模式" VerticalContentAlignment="Center"/>
+            <CheckBox Content="调试模式" VerticalContentAlignment="Center"
+                      IsChecked="{Binding IsDebug}"/>
         </StackPanel>
         
 
         <TextBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
                  Margin="0,10,0,10" Padding="5"
                  IsReadOnly="True"
-                 Text="图库路径："/>
+                 Text="{Binding IsDebug, StringFormat=图库路径：{0}}"/>
 
         <ListView Grid.Column="0" Grid.Row="2"
                   Margin="0,0,5,0">
