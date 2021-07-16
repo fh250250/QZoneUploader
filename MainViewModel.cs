@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace QZoneUploader
 {
-    public class MainViewModel
+    public class MainViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -12,7 +12,7 @@ namespace QZoneUploader
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private ObservableCollection<Account> _accounts;
+        private ObservableCollection<Account> _accounts = new ObservableCollection<Account>();
         public ObservableCollection<Account> Accounts
         {
             get => _accounts;
@@ -26,7 +26,7 @@ namespace QZoneUploader
             }
         }
 
-        private ObservableCollection<string> _texts;
+        private ObservableCollection<string> _texts = new ObservableCollection<string>();
         public ObservableCollection<string> Texts
         {
             get => _texts;
@@ -40,7 +40,7 @@ namespace QZoneUploader
             }
         }
 
-        private ObservableCollection<string> _images;
+        private ObservableCollection<string> _images = new ObservableCollection<string>();
         public ObservableCollection<string> Images
         {
             get => _images;
@@ -63,6 +63,20 @@ namespace QZoneUploader
                 if (value != _isDebug)
                 {
                     _isDebug = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private bool _isRunning = false;
+        public bool IsRunning
+        {
+            get => _isRunning;
+            set
+            {
+                if (value != _isRunning)
+                {
+                    _isRunning = value;
                     NotifyPropertyChanged();
                 }
             }

@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:QZoneUploader"
              Startup="Application_Startup">
     <Application.Resources>
-         
+        <local:BooleanInverseConverter x:Key="booleanInverseConverter"/>
     </Application.Resources>
 </Application>

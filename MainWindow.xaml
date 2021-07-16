@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QZoneUploader"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="500" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Padding" Value="5,2,5,2"/>
@@ -16,9 +16,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="100"/>
@@ -26,38 +26,62 @@
 
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
             <Button x:Name="btnAccount" Content="设置账号" Margin="0,0,10,0"
+                    IsEnabled="{Binding IsRunning, Converter={StaticResource booleanInverseConverter}}"
                     Click="btnAccount_Click"/>
             <Button x:Name="btnText" Content="设置文本" Margin="0,0,10,0"
+                    IsEnabled="{Binding IsRunning, Converter={StaticResource booleanInverseConverter}}"
                     Click="btnText_Click"/>
-            <Button x:Name="btnImage" Content="设置图库"
+            <Button x:Name="btnImage" Content="设置图片"
+                    IsEnabled="{Binding IsRunning, Converter={StaticResource booleanInverseConverter}}"
                     Click="btnImage_Click"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="btnRun" Content="运行" Width="80" Margin="0,0,10,0"
+                    IsEnabled="{Binding IsRunning, Converter={StaticResource booleanInverseConverter}}"
                     Click="btnRun_Click"/>
             <CheckBox Content="调试模式" VerticalContentAlignment="Center"
+                      IsEnabled="{Binding IsRunning, Converter={StaticResource booleanInverseConverter}}"
                       IsChecked="{Binding IsDebug}"/>
         </StackPanel>
-        
 
-        <TextBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
-                 Margin="0,10,0,10" Padding="5"
-                 IsReadOnly="True"
-                 Text="{Binding IsDebug, StringFormat=图库路径：{0}}"/>
-
-        <ListView Grid.Column="0" Grid.Row="2"
-                  Margin="0,0,5,0">
-
+        <ListView Grid.Column="0" Grid.Row="1"
+                  Margin="0,10,5,10"
+                  ItemsSource="{Binding Accounts}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="账号" DisplayMemberBinding="{Binding Username}"/>
+                    <GridViewColumn Header="密码" DisplayMemberBinding="{Binding Password}"/>
+                    <GridViewColumn Header="状态" DisplayMemberBinding="{Binding Status}"/>
+                </GridView>
+            </ListView.View>
         </ListView>
 
-        <ListView Grid.Column="1" Grid.Row="2"
-                  Margin="5,0,0,0">
+        <ListView Grid.Column="1" Grid.Row="1"
+                  Margin="5,10,0,10"
+                  ItemsSource="{Binding Texts}"/>
 
-        </ListView>
+        <ScrollViewer Grid.Column="2" Grid.Row="0" Grid.RowSpan="3"
+                      VerticalScrollBarVisibility="Auto" Margin="10,0,0,0">
+            <ItemsControl ItemsSource="{Binding Images}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="1" BorderBrush="LightGray"
+                                Margin="5">
+                            <Image Source="{Binding}"/>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
 
-        <TextBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"
-                 Margin="0,10,0,0"
+        <TextBox x:Name="tbLogs" 
+                 Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
                  IsReadOnly="True"
                  Text="Logs Goes Here"/>
     </Grid>

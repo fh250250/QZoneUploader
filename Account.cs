@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace QZoneUploader
 {
-    public class Account
+    public class Account : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
