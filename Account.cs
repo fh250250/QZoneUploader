@@ -1,41 +1,23 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace QZoneUploader
 {
-    public class Account : INotifyPropertyChanged
+    public class Account : ObservableObject
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public string Username { get; }
+        public string Password { get; }
 
-        private string _username;
-        public string Username => _username;
-
-        private string _password;
-        public string Password => _password;
-
-        private AccountStatus _status;
+        private AccountStatus _status = AccountStatus.IDLE;
         public AccountStatus Status
         {
             get => _status;
-            set
-            {
-                if (value != _status)
-                {
-                    _status = value;
-                    NotifyPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _status, value);
         }
 
         public Account(string username, string password)
         {
-            _username = username;
-            _password = password;
-            _status = AccountStatus.IDLE;
+            Username = username;
+            Password = password;
         }
     }
 

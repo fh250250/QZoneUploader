@@ -1,31 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace QZoneUploader
 {
-    class DownloadViewModel : INotifyPropertyChanged
+    public class DownloadViewModel : ObservableObject
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private int _progress = 0;
         public int Progress
         {
             get => _progress;
-            set
-            {
-                if (value != _progress)
-                {
-                    _progress = value;
-                    NotifyPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _progress, value);
         }
     }
 }
