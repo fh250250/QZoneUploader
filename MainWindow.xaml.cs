@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Windows;
 
@@ -95,6 +96,45 @@ namespace QZoneUploader
                 MessageBox.Show("没有图片数据", "", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+
+            Run();
+        }
+
+        private void BtnShowDetail_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstAccounts.SelectedItem == null) return;
+
+            Account account = (Account)LstAccounts.SelectedItem;
+
+            MessageBox.Show(account.Username);
+        }
+
+        private async void Run()
+        {
+            TbLogs.Clear();
+            ViewModel.IsRunning = true;
+
+            foreach (var acc in ViewModel.Accounts)
+            {
+                var robot = new Robot(acc, ViewModel);
+                robot.MessageComming += Robot_MessageComming;
+                await robot.Run(ViewModel.IsDebug);
+            }
+
+            ViewModel.IsRunning = false;
+        }
+
+        private void Robot_MessageComming(object sender, string e)
+        {
+            var account = ((Robot)sender).Account;
+            AppendLog($"[{account.Username}] {e}");
+        }
+
+        private void AppendLog(string msg)
+        {
+            TbLogs.AppendText(msg);
+            TbLogs.AppendText(Environment.NewLine);
+            TbLogs.ScrollToEnd();
         }
     }
 }

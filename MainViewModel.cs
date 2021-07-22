@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.ObjectModel;
 
 namespace QZoneUploader
@@ -39,5 +40,8 @@ namespace QZoneUploader
             get => _isRunning;
             set => SetProperty(ref _isRunning, value);
         }
+
+        public string RandomImage => Images[new Random().Next(0, Images.Count)];
+        public string RandomText => Texts[new Random().Next(0, Texts.Count)];
     }
 }
