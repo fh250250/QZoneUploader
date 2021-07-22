@@ -1,5 +1,8 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Windows.Data;
 
 namespace QZoneUploader
 {
@@ -27,6 +30,18 @@ namespace QZoneUploader
         {
             Logs.Add(log);
         }
+
+        public static string StatusToString(AccountStatus status)
+        {
+            return status switch
+            {
+                AccountStatus.IDLE => "等待中",
+                AccountStatus.RUNNING => "运行中",
+                AccountStatus.SUCCESS => "成功",
+                AccountStatus.FAILURE => "失败",
+                _ => "",
+            };
+        }
     }
 
     public enum AccountStatus
@@ -35,5 +50,19 @@ namespace QZoneUploader
         RUNNING,
         SUCCESS,
         FAILURE,
+    }
+
+    [ValueConversion(typeof(AccountStatus), typeof(string))]
+    public class AccountStatusToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return Account.StatusToString((AccountStatus)value);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

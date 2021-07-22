@@ -106,7 +106,11 @@ namespace QZoneUploader
 
             Account account = (Account)LstAccounts.SelectedItem;
 
-            MessageBox.Show(account.Username);
+            var detailWindow = new AccountDetailWindow();
+
+            detailWindow.LoadData(account);
+            detailWindow.Owner = this;
+            detailWindow.ShowDialog();
         }
 
         private async void Run()

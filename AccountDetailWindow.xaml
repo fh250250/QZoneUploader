@@ -1,0 +1,26 @@
+﻿<Window x:Class="QZoneUploader.AccountDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QZoneUploader"
+        mc:Ignorable="d"
+        Title="账号详情" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBox x:Name="TboxLogs"
+                 Grid.Row="0" Grid.Column="0"
+                 IsReadOnly="True"
+                 Margin="0,0,10,0" Background="LightGray"/>
+
+        <Image x:Name="ImgScreenshot"
+               Grid.Row="0" Grid.Column="1"/>
+    </Grid>
+</Window>

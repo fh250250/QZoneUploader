@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QZoneUploader"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="900" WindowStartupLocation="CenterScreen">
+        Title="QQ空间相册上传工具        联系人：生命  296359534" Height="600" Width="900" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>
@@ -14,6 +14,7 @@
         <Style TargetType="Button">
             <Setter Property="Padding" Value="5,2,5,2"/>
         </Style>
+        <local:AccountStatusToStringConverter x:Key="accountStatusConverter"/>
     </Window.Resources>
     
     <Grid Margin="10">
@@ -58,7 +59,7 @@
                 <GridView>
                     <GridViewColumn Header="账号" Width="80" DisplayMemberBinding="{Binding Username}"/>
                     <GridViewColumn Header="密码" Width="80" DisplayMemberBinding="{Binding Password}"/>
-                    <GridViewColumn Header="状态" Width="60" DisplayMemberBinding="{Binding Status}"/>
+                    <GridViewColumn Header="状态" Width="80" DisplayMemberBinding="{Binding Status, Converter={StaticResource accountStatusConverter}}"/>
                 </GridView>
             </ListView.View>
         </ListView>

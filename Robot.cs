@@ -119,6 +119,7 @@ namespace QZoneUploader
             OnMessage("打开上传对话框");
             await (await tphotoFrame.WaitForSelectorAsync(".j-uploadentry-photo")).ClickAsync();
             var uploadFrame = await page.WaitForFrameAsync("photoUploadDialog");
+            await page.WaitForTimeoutAsync(3000);
 
             var imagePath = MainViewModel.RandomImage;
             OnMessage($"选择随机文件 {imagePath}");
