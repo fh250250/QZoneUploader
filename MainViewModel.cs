@@ -41,6 +41,18 @@ namespace QZoneUploader
             set => SetProperty(ref _isRunning, value);
         }
 
+        public uint DelaySec
+        {
+            get => Properties.Settings.Default.RunDelaySec;
+            set
+            {
+                OnPropertyChanging();
+                Properties.Settings.Default.RunDelaySec = value;
+                Properties.Settings.Default.Save();
+                OnPropertyChanged();
+            }
+        }
+
         public string RandomImage => Images[new Random().Next(0, Images.Count)];
         public string RandomText => Texts[new Random().Next(0, Texts.Count)];
     }

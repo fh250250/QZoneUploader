@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:NumericUpDownLib;assembly=NumericUpDownLib"
         xmlns:local="clr-namespace:QZoneUploader"
         mc:Ignorable="d"
         Title="QQ空间相册上传工具        联系人：生命  296359534" Height="600" Width="900" WindowStartupLocation="CenterScreen">
@@ -30,7 +31,7 @@
             <RowDefinition Height="120"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+        <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
             <Button Content="设置账号" Margin="0,0,10,0"
                     IsEnabled="{Binding IsRunning, Converter={StaticResource booleanInverseConverter}}"
                     Click="BtnAccount_Click"/>
@@ -39,10 +40,17 @@
                     Click="BtnText_Click"/>
             <Button Content="设置图片"
                     IsEnabled="{Binding IsRunning, Converter={StaticResource booleanInverseConverter}}"
-                    Click="BtnImage_Click"/>
+                    Click="BtnImage_Click" Margin="0,0,20,0"/>
+            
+            <Label Content="延时(秒):"/>
+            <controls:UIntegerUpDown Value="{Binding DelaySec, Mode=TwoWay}"
+                                     MinValue="1"
+                                     MaxValue="30"
+                                     IsMouseDragEnabled="False"
+                                     IsEnabled="{Binding IsRunning, Converter={StaticResource booleanInverseConverter}}"/>
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="BtnRun" Content="运行" Width="80" Margin="0,0,10,0"
                     IsEnabled="{Binding IsRunning, Converter={StaticResource booleanInverseConverter}}"
                     Click="BtnRun_Click"/>
@@ -72,8 +80,8 @@
             <Button HorizontalAlignment="Right" Content="查看详情" Click="BtnShowDetail_Click"/>
         </StackPanel>
 
-        <ScrollViewer Grid.Column="2" Grid.Row="0" Grid.RowSpan="4"
-                      VerticalScrollBarVisibility="Auto" Margin="10,0,0,0">
+        <ScrollViewer Grid.Column="2" Grid.Row="1" Grid.RowSpan="3"
+                      VerticalScrollBarVisibility="Auto" Margin="10,10,0,0">
             <ItemsControl ItemsSource="{Binding Images}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
