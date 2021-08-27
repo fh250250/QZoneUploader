@@ -119,9 +119,7 @@ namespace QZoneUploader
             OnMessage("打开上传对话框");
             await (await tphotoFrame.WaitForSelectorAsync(".j-uploadentry-photo")).ClickAsync();
             var uploadFrame = await page.WaitForFrameAsync("photoUploadDialog");
-
-            OnMessage($"延时{MainViewModel.DelaySec}s");
-            await page.WaitForTimeoutAsync((int)MainViewModel.DelaySec);
+            await Delay();
 
             var imagePath = MainViewModel.RandomImage;
             OnMessage($"选择随机文件 {imagePath}");
@@ -134,17 +132,22 @@ namespace QZoneUploader
             _ = await page.WaitForSelectorAsync("#photoUploadDialog", new WaitForSelectorOptions() { Hidden = true });
             _ = await tphotoFrame.WaitForSelectorAsync("#desc_all");
 
-            OnMessage($"延时{MainViewModel.DelaySec}s");
-            await page.WaitForTimeoutAsync((int)MainViewModel.DelaySec);
-
+            await Delay();
             OnMessage("填写随机文本");
             await tphotoFrame.TypeAsync("#desc_all", MainViewModel.RandomText);
-
-            OnMessage($"延时{MainViewModel.DelaySec}s");
-            await page.WaitForTimeoutAsync((int)MainViewModel.DelaySec);
+            await Delay();
 
             await (await tphotoFrame.WaitForSelectorAsync("#back_btn_md")).ClickAsync();
             _ = await tphotoFrame.WaitForNavigationAsync();
+        }
+
+        private Task Delay()
+        {
+            var sec = (int)MainViewModel.DelaySec;
+            var ms = sec * 1000;
+
+            OnMessage($"延时{sec}s");
+            return Task.Delay(ms);
         }
     }
 }
